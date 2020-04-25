@@ -1,0 +1,1 @@
+{"version":3,"file":"ITelemetryFilterExtensionConfig.js","sourceRoot":"","sources":["../../src/Interfaces/ITelemetryFilterExtensionConfig.ts"],"names":[],"mappings":"","sourcesContent":["export interface ITelemetryFilterExtensionConfig {\r\n  filteredHeaders?: {\r\n    [key: string]: string[2];\r\n  },\r\n  filteredName?: string[2],\r\n  filteredData?: string[2]\r\n}\r\n"]}
