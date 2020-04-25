@@ -74,3 +74,13 @@ It can do three things for those three items:
    ```
 
    The HTTP header will be removed by the filter, and won't show in Application Insights telemetry. The same goes for URLs in the 'name' and 'data' properties of the telemetry.
+
+## Testing
+
+The filter has tests, simply run
+
+```console
+npm test
+```
+
+
