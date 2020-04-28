@@ -15,13 +15,6 @@ export default class FilterPlugin extends BaseTelemetryPlugin {
             config.extensionConfig && config.extensionConfig[this.identifier]
                 ? (config.extensionConfig[this.identifier] as ITelemetryFilterExtensionConfig)
                 : undefined;
-
-        // CoreUtils.arrForEach(extensions, ext => {
-        //     const identifier = (ext as ITelemetryPlugin).identifier;
-        //     if (identifier === 'ApplicationInsightsAnalytics') {
-        //         this._analyticsPlugin = (ext as any) as IAppInsights;
-        //     }
-        // });
     }
 
     /**
@@ -56,7 +49,9 @@ export default class FilterPlugin extends BaseTelemetryPlugin {
                     let regexMatcher : string = replacementConfig[0];
                     let regexReplace : string = replacementConfig[1];
                     
-                    baseData[propertyName] = currentValue.replace(regexMatcher, regexReplace);
+                    if(regexMatcher.match(currentValue) !== null) {
+                        baseData[propertyName] = currentValue.replace(regexMatcher, regexReplace);
+                    }
                 }
             }
         }
@@ -81,7 +76,9 @@ export default class FilterPlugin extends BaseTelemetryPlugin {
                                 let regexMatcher : string = headerConfig[0];
                                 let regexReplace : string = headerConfig[1];
 
-                                headers[headerProperty] = currentValue.replace(regexMatcher, regexReplace);
+                                if(regexMatcher.match(currentValue) !== null) {
+                                    headers[headerProperty] = currentValue.replace(regexMatcher, regexReplace);
+                                }
                             }
                         }
                     } else {
