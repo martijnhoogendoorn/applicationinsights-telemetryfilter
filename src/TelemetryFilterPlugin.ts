@@ -52,9 +52,12 @@ export default class FilterPlugin extends BaseTelemetryPlugin {
                 }
             } else {
                 let currentValue = baseData[propertyName];
-                let regexMatcher : string = replacementConfig[0];
-                let regexReplace : string = replacementConfig[1];
-                baseData[propertyName] = currentValue.replace(regexMatcher, regexReplace);
+                if(currentValue !== undefined) {
+                    let regexMatcher : string = replacementConfig[0];
+                    let regexReplace : string = replacementConfig[1];
+                    
+                    baseData[propertyName] = currentValue.replace(regexMatcher, regexReplace);
+                }
             }
         }
     }
@@ -74,9 +77,12 @@ export default class FilterPlugin extends BaseTelemetryPlugin {
                             headers[headerProperty] = headerConfig[0];
                         } else {
                             let currentValue : string = headers[headerProperty];
-                            let regexMatcher : string = headerConfig[0];
-                            let regexReplace : string = headerConfig[1];
-                            headers[headerProperty] = currentValue.replace(regexMatcher, regexReplace);
+                            if(currentValue !== undefined) {
+                                let regexMatcher : string = headerConfig[0];
+                                let regexReplace : string = headerConfig[1];
+
+                                headers[headerProperty] = currentValue.replace(regexMatcher, regexReplace);
+                            }
                         }
                     } else {
                         // Otherwise, silently delete the property

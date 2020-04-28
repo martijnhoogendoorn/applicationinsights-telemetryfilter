@@ -279,7 +279,7 @@ describe('TelemetryFilter', () => {
     filteringPlugin.initialize(extensionConfig, null, null, null);
     filteringPlugin.processTelemetry(remoteDependencyData, null);
 
-    expect(remoteDependencyData.baseData.data).to.equal(`${testMethod} https://reporting.somedomain.com/api/reports/clients/000000-0000/instances/000000-0000/documents/000000-0000000000-0000/info`);
     expect(remoteDependencyData.baseData.name).to.equal(`${testMethod} https://reporting.somedomain.com/api/reports/clients/000000-0000/instances/000000-0000/documents/000000-0000000000-0000/info`);
+    expect(remoteDependencyData.baseData.data).to.equal(`${testMethod} https://reporting.somedomain.com/api/reports/clients/000000-0000/instances/000000-0000/documents/000000-0000000000-0000/info`);
   });
 });
