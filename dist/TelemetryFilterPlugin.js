@@ -17,12 +17,6 @@ var FilterPlugin = /** @class */ (function (_super) {
             config.extensionConfig && config.extensionConfig[this.identifier]
                 ? config.extensionConfig[this.identifier]
                 : undefined;
-        // CoreUtils.arrForEach(extensions, ext => {
-        //     const identifier = (ext as ITelemetryPlugin).identifier;
-        //     if (identifier === 'ApplicationInsightsAnalytics') {
-        //         this._analyticsPlugin = (ext as any) as IAppInsights;
-        //     }
-        // });
     };
     /**
      * Filters out configured information from the telemetry event prior to sending it to Application Insights
@@ -53,9 +47,13 @@ var FilterPlugin = /** @class */ (function (_super) {
             }
             else {
                 var currentValue = baseData[propertyName];
-                var regexMatcher = replacementConfig[0];
-                var regexReplace = replacementConfig[1];
-                baseData[propertyName] = currentValue.replace(regexMatcher, regexReplace);
+                if (currentValue !== undefined) {
+                    var regexMatcher = replacementConfig[0];
+                    var regexReplace = replacementConfig[1];
+                    if (regexMatcher.match(currentValue) !== null) {
+                        baseData[propertyName] = currentValue.replace(regexMatcher, regexReplace);
+                    }
+                }
             }
         }
     };
@@ -77,9 +75,13 @@ var FilterPlugin = /** @class */ (function (_super) {
                         }
                         else {
                             var currentValue = headers[headerProperty];
-                            var regexMatcher = headerConfig[0];
-                            var regexReplace = headerConfig[1];
-                            headers[headerProperty] = currentValue.replace(regexMatcher, regexReplace);
+                            if (currentValue !== undefined) {
+                                var regexMatcher = headerConfig[0];
+                                var regexReplace = headerConfig[1];
+                                if (regexMatcher.match(currentValue) !== null) {
+                                    headers[headerProperty] = currentValue.replace(regexMatcher, regexReplace);
+                                }
+                            }
                         }
                     }
                     else {

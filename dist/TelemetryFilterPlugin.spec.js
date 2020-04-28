@@ -5,13 +5,14 @@ var applicationinsights_telemetryfilter_1 = require("./applicationinsights-telem
 var guid_typescript_1 = require("guid-typescript");
 var chai_1 = require("chai");
 require("mocha");
+var goodTarget = 'https://reporting.somedomain.com/api/reports/clients/105659-7173/instances/108203-4dd8/documents/105203-e34a105203-19d9/info';
 var msftDomain = 'https://www.microsoft.com/';
-var githubDomain = 'https://www.github.com/';
 var testMethod = 'POST';
 function setupInitialTelemetry() {
-    var remoteDependencyData = applicationinsights_common_1.TelemetryItemCreator.create(new applicationinsights_common_1.RemoteDependencyData(null, "|" + guid_typescript_1.Guid.create().toString().replace('-', '') + "." + guid_typescript_1.Guid.create().toString().replace('-', '').substring(0, 16), 'absoluteurl', testMethod + " " + githubDomain, 10, true, // success
+    var remoteDependencyData = applicationinsights_common_1.TelemetryItemCreator.create(new applicationinsights_common_1.RemoteDependencyData(null, "|" + guid_typescript_1.Guid.create().toString().replace('-', '') + "." + guid_typescript_1.Guid.create().toString().replace('-', '').substring(0, 16), "" + goodTarget, // this gets parsed by AI into 
+    testMethod + " " + goodTarget, 10, true, // success
     200, "" + testMethod, // method
-    'Ajax', 'correlationcontext', null, // properties (don't pass, any sanitizer makes a JSON string from it and we need the object)
+    'Ajax', null, null, // properties (don't pass, any sanitizer makes a JSON string from it and we need the object)
     null // measurements
     ), applicationinsights_common_1.RemoteDependencyData.dataType, "Microsoft.ApplicationInsights." + guid_typescript_1.Guid.create().toString().replace('-', ''), {}.logger, null, // customproperties,
     null // systemproperties
@@ -196,6 +197,22 @@ describe('TelemetryFilter', function () {
         filteringPlugin.initialize(extensionConfig, null, null, null);
         filteringPlugin.processTelemetry(remoteDependencyData, null);
         chai_1.expect(remoteDependencyData.baseData.data).to.equal(testMethod + " **DATA URL REMOVED**");
+    });
+    it("Should remove potentially sensitive data from 'name' and 'data' property", function () {
+        var _a;
+        var remoteDependencyData = setupInitialTelemetry();
+        var extensionConfig = { extensionConfig: (_a = {},
+                _a[filteringPlugin.identifier] = {
+                    //'https://reporting.somedomain.com/api/reports/clients/105659-7173/instances/108203-4dd8/documents/105203-e34a105203-19d9/info';
+                    filteredName: [/^(.*\/clients\/)[0-9]{6}-[0-9]{4}(\/instances\/)[0-9]{6}-[0-9a-z]{4}(\/documents\/)[0-9]{6}-[0-9a-z]{10}-[0-9a-z]{4}(\/info)$/gi, '$1000000-0000$2000000-0000$3000000-0000000000-0000$4'],
+                    filteredData: [/^(.*\/clients\/)[0-9]{6}-[0-9]{4}(\/instances\/)[0-9]{6}-[0-9a-z]{4}(\/documents\/)[0-9]{6}-[0-9a-z]{10}-[0-9a-z]{4}(\/info)$/gi, '$1000000-0000$2000000-0000$3000000-0000000000-0000$4']
+                },
+                _a)
+        };
+        filteringPlugin.initialize(extensionConfig, null, null, null);
+        filteringPlugin.processTelemetry(remoteDependencyData, null);
+        chai_1.expect(remoteDependencyData.baseData.name).to.equal(testMethod + " https://reporting.somedomain.com/api/reports/clients/000000-0000/instances/000000-0000/documents/000000-0000000000-0000/info");
+        chai_1.expect(remoteDependencyData.baseData.data).to.equal(testMethod + " https://reporting.somedomain.com/api/reports/clients/000000-0000/instances/000000-0000/documents/000000-0000000000-0000/info");
     });
 });
 //# sourceMappingURL=TelemetryFilterPlugin.spec.js.map
