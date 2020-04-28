@@ -1,9 +1,10 @@
 {
   "name": "applicationinsights-telemetryfilter",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "types": "./types/applicationinsights-telemetryfilter.d.ts",
   "description": "Provides an Application Insights extension which filters out configured telemetry before sending",
   "main": "dist/applicationinsights-telemetryfilter.js",
+  "module": "dist/applicationinsights-telemetryfilter.js",
   "scripts": {
     "build": "npm run clean && npm run build:esm",
     "clean": "rm -rf dist && rm -rf types",
@@ -24,7 +25,6 @@
   "dependencies": {
     "@microsoft/applicationinsights-common": ">=2.5.1",
     "@microsoft/applicationinsights-core-js": ">=2.5.1",
-    "@types/xregexp": "^4.3.0",
     "grunt-cli": "^1.3.2",
     "guid-typescript": "^1.0.9"
   },

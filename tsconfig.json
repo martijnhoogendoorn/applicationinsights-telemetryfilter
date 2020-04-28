@@ -16,7 +16,6 @@
     "declaration": true,
     "declarationDir": "types",
     "outDir": "dist",
-    "types" : [ "xregexp" ],
     "rootDir": "src"
   },
   "include": [
