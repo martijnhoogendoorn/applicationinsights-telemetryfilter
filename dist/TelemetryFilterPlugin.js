@@ -47,10 +47,10 @@ var FilterPlugin = /** @class */ (function (_super) {
             }
             else {
                 var currentValue = baseData[propertyName];
-                if (currentValue !== undefined) {
+                if (currentValue) {
                     var regexMatcher = replacementConfig[0];
                     var regexReplace = replacementConfig[1];
-                    if (regexMatcher.match(currentValue) !== null) {
+                    if (currentValue.match(regexMatcher) !== null) {
                         baseData[propertyName] = currentValue.replace(regexMatcher, regexReplace);
                     }
                 }
@@ -75,10 +75,10 @@ var FilterPlugin = /** @class */ (function (_super) {
                         }
                         else {
                             var currentValue = headers[headerProperty];
-                            if (currentValue !== undefined) {
+                            if (currentValue) {
                                 var regexMatcher = headerConfig[0];
                                 var regexReplace = headerConfig[1];
-                                if (regexMatcher.match(currentValue) !== null) {
+                                if (currentValue.match(regexMatcher) !== null) {
                                     headers[headerProperty] = currentValue.replace(regexMatcher, regexReplace);
                                 }
                             }

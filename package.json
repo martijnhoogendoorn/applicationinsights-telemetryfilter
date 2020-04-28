@@ -1,6 +1,6 @@
 {
   "name": "applicationinsights-telemetryfilter",
-  "version": "1.0.21",
+  "version": "1.0.3",
   "types": "./types/applicationinsights-telemetryfilter.d.ts",
   "description": "Provides an Application Insights extension which filters out configured telemetry before sending",
   "main": "dist/applicationinsights-telemetryfilter.js",
